@@ -1,0 +1,19 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw; /* Ensure full width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw; /* Make app take full screen width */
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100vw; /* Ensures content stretches across full screen */
+  background-color: inherit;
+}
