@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,17 +8,35 @@ import MentorFinderPage from "./pages/mentorpage.jsx";
 import ProfilePage from "./pages/profilepage.jsx";
 import RegistrationPage from "./pages/registrationpage.jsx";
 import LoginPage from "./pages/loginpage.jsx";
+import SurveyPage from "./pages/SurveyPage.jsx";
+import MentorMatchesPage from "./pages/MentorMatchesPage.jsx";
 import Footer from "./components/footer.jsx";
-import { AuthProvider } from "./context/AuthContext"; // Import AuthProvider
+import { AuthProvider } from "./context/AuthContext"; // Keep AuthProvider for authentication context
 import "./App.css";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
+  // Retrieve dark mode preference from localStorage or default to dark mode
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
 
+  // Retrieve login status from localStorage or default to false
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+
+  // Save dark mode and login status to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode.toString());
+    localStorage.setItem("isLoggedIn", isLoggedIn.toString());
+  }, [darkMode, isLoggedIn]);
+
+  // Toggle dark/light mode
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    setDarkMode((prevMode) => !prevMode);
   };
 
+  // Create theme dynamically based on darkMode state
   const theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
@@ -40,20 +58,26 @@ function App() {
   });
 
   return (
-    <AuthProvider> {/* Wrap everything inside AuthProvider */}
+    <AuthProvider> {/* Ensure authentication context is available */}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-          <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+          {/* Navbar */}
+          <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+
+          {/* Main Content */}
           <main className="main-content" style={{ width: "100vw", overflowX: "hidden" }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/find-mentor" element={<MentorFinderPage />} />
+              <Route path="/find-mentor" element={<SurveyPage />} /> {/* Uses SurveyPage for mentor search */}
+              <Route path="/mentor-matches" element={<MentorMatchesPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/register" element={<RegistrationPage />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
             </Routes>
           </main>
+
+          {/* Footer */}
           <Footer />
         </Router>
       </ThemeProvider>

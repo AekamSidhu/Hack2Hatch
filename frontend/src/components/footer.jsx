@@ -1,4 +1,3 @@
-// src/components/Footer.jsx
 import React from 'react';
 import { Box, Container, Typography, Grid, Link, IconButton } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -8,11 +7,20 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 6, mt: 'auto' }}>
+    <Box 
+      component="footer" 
+      sx={{ 
+        background: 'linear-gradient(45deg, #6a11cb 30%, #2575fc 90%)', // Gradient Background
+        color: 'white', 
+        py: 6, 
+        mt: 'auto' 
+      }}
+    >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
+          {/* Mentor Connect - About Section */}
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
               Mentor Connect
             </Typography>
             <Typography variant="body2">
@@ -34,8 +42,9 @@ const Footer = () => {
             </Box>
           </Grid>
           
+          {/* Quick Links Section */}
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
               Quick Links
             </Typography>
             <Typography variant="body2" display="block" gutterBottom>
@@ -43,7 +52,6 @@ const Footer = () => {
                 Home
               </Link>
             </Typography>
-            
             <Typography variant="body2" display="block" gutterBottom>
               <Link href="/find-mentor" color="inherit" underline="hover">
                 Find Mentors
@@ -55,24 +63,29 @@ const Footer = () => {
               </Link>
             </Typography>
             <Typography variant="body2" display="block" gutterBottom>
-              <Link href="#" color="inherit" underline="hover">
+              <Link href="/about" color="inherit" underline="hover">
                 About Us
               </Link>
             </Typography>
           </Grid>
           
+          {/* Contact Section */}
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
               Contact Us
             </Typography>
             <Typography variant="body2" gutterBottom>
               Have questions or feedback? Reach out to us at:
             </Typography>
             <Typography variant="body2" gutterBottom>
-              support@mentorboat.com
+              <Link href="mailto:support@mentorconnect.com" color="inherit" underline="hover">
+                support@mentorconnect.com
+              </Link>
             </Typography>
           </Grid>
         </Grid>
+
+        {/* Footer Copyright */}
         <Box sx={{ mt: 3, textAlign: 'center' }}>
           <Typography variant="body2">
             &copy; {new Date().getFullYear()} Mentor Connect

@@ -3,7 +3,8 @@ import api from './api';
 // ✅ Register user
 export const register = async (userData) => {
   try {
-    const response = await api.post('/api/auth/register', {
+    const response = await api.post('auth/register', {
+
       name: userData.name,
       email: userData.email,
       password: userData.password,
@@ -19,7 +20,8 @@ export const register = async (userData) => {
 // ✅ Login user
 export const login = async (email, password) => {
   try {
-    const response = await api.post('/api/auth/login', { email, password });
+    const response = await api.post('auth/login', { email, password });
+
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -42,7 +44,8 @@ export const logout = () => {
 // ✅ Get current user
 export const getCurrentUser = async () => {
   try {
-    const response = await api.get('/api/auth/me'); // ✅ Requires new backend route
+    const response = await api.get('auth/me'); // ✅ Requires new backend route
+
     return response.data;
   } catch (error) {
     console.error("❌ Fetching Current User Error:", error.response?.data || error.message);

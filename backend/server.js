@@ -9,7 +9,8 @@ const app = express();
 
 // ✅ Middleware
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // Adjust origin as needed
+app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:5173'], credentials: true })); // Adjust origin as needed
+
 
 // ✅ Connect to MongoDB
 mongoose

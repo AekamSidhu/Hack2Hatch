@@ -26,6 +26,8 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     user = new User({ name, email, password: hashedPassword, role });
+    console.log("📩 User Created:", user); // Debug user creation
+
     await user.save();
 
     res.status(201).json({ success: true, message: 'User registered successfully' });
@@ -61,10 +63,8 @@ router.post(
         return res.status(400).json({ success: false, message: 'Invalid credentials' });
       }
 
-      if (!user.password) {
-        console.log("❌ Password field is missing in database!");
-        return res.status(500).json({ success: false, message: 'Server Error: Password field missing' });
-      }
+      // Include password field in the user object
+      user = await User.findOne({ email }).select('+password');
 
       // ✅ Compare password securely
       const isMatch = await bcrypt.compare(password, user.password);
